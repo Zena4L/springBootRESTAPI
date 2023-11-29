@@ -12,12 +12,13 @@ import java.util.function.Predicate;
 public class UserDaoService {
     // JPA/ Hibernate Database
     // UserDao > Static List
-    private static List<User> users = new ArrayList<>();
+    private static final List<User> users = new ArrayList<>();
+    private static int userCount = 0;
 
     static {
-        users.add(new User("Clement", 1, LocalDate.now().minusYears(30)));
-        users.add(new User("Zena", 2, LocalDate.now().minusYears(10)));
-        users.add(new User("Owireku", 3, LocalDate.now().minusYears(15)));
+        users.add(new User("Clement", ++userCount, LocalDate.now().minusYears(30)));
+        users.add(new User("Zena", ++userCount, LocalDate.now().minusYears(10)));
+        users.add(new User("Owireku", ++userCount, LocalDate.now().minusYears(15)));
     }
      public List<User> findAll(){
         return users;
@@ -28,5 +29,16 @@ public class UserDaoService {
                 .filter(user -> user.getId().equals(id))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public User save(User user){
+        user.setId(++userCount);
+        users.add(user);
+        return user;
+    }
+
+    public void deleteById(int id){
+        Predicate<? super User> predicate = user -> user.getId().equals(id);
+        users.removeIf(predicate);
     }
 }
