@@ -1,11 +1,14 @@
 package com.clement.springboot.restAPI.user;
 
+import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 
 
 public class User {
+
+
     private String name;
     private int id;
     private LocalDate birthDate;
